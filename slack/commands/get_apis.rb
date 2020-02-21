@@ -16,15 +16,19 @@ module Slack
                 client.say(channel: data.channel, text: HelloText.say_hello)
             end
 
+            command 'say' do |client, data, _match|
+                client.say(channel: data.channel, text: "You Said#{_match[:expression]}")
+            end
+
             command 'get' do |client ,data, _match|
-                response = HTTParty.get("https://swagger-apis.herokuapp.com/search_requests?search=#{_match}")
+                response = HTTParty.get("https://swagger-apis.herokuapp.com/search_requests?search=#{_match[:expression]}")
                 @text = []
                 response.parsed_response["requests"].each do |res|
                     id = res["id"]
                     title = res["title"]
                     project = res["collection_name"]
                     link = "https://api-docs.vinyas.im/try_request/#{id}"
-                    @text << "Latest Api is #{title} from #{project} \n #{link}"
+                    @text << "#{title} from #{project} \n #{link} \n"
                 end
                 client.say(channel: data.channel,text: @text.to_sentence )
             end
