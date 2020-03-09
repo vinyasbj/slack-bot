@@ -23,7 +23,7 @@ module Slack
             command 'get' do |client ,data, _match|
                 response = HTTParty.get("https://swagger-apis.herokuapp.com/search_requests?search=#{_match[:expression]}")
                 @text = []
-                if response.empty? 
+                if response.parsed_response["requests"].empty? 
                     client.say(channel: data.channel,text: "No Records Found" )
                 else
                     response.parsed_response["requests"].each do |res|
