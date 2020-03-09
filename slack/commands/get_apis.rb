@@ -23,16 +23,19 @@ module Slack
             command 'get' do |client ,data, _match|
                 response = HTTParty.get("https://swagger-apis.herokuapp.com/search_requests?search=#{_match[:expression]}")
                 @text = []
-                response.parsed_response["requests"].each do |res|
-                    id = res["id"]
-                    title = res["title"]
-                    project = res["collection_name"]
-                    link = "https://api-docs.vinyas.im/try_request/#{id}"
-                    @text << "#{title} from #{project} \n #{link} \n"
+                if response.empty? 
+                    client.say(channel: data.channel,text: "No Records Found" )
+                else
+                    response.parsed_response["requests"].each do |res|
+                        id = res["id"]
+                        title = res["title"]
+                        project = res["collection_name"]
+                        link = "https://api-docs.vinyas.im/try_request/#{id}"
+                        @text << "#{title} from #{project} \n #{link} \n"
+                    end
+                    client.say(channel: data.channel,text: @text.to_sentence )
                 end
-                client.say(channel: data.channel,text: @text.to_sentence )
             end
-
         end
     end
 end

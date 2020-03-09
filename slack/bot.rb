@@ -12,6 +12,14 @@ module Slack
                 desc "gets the latest api form docs"
                 long_desc "gets the latest api form docs"
             end
+            
+            title "get"
+            desc "search api's"
+
+            command :get do
+                title "search command"
+                desc "gets all the apis based on the keyword"
+            end
         end
     end
 end
