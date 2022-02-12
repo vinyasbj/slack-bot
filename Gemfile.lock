@@ -57,8 +57,8 @@ GEM
     minitest (5.14.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    nio4r (2.5.2)
-    puma (4.3.1)
+    nio4r (2.5.8)
+    puma (4.3.11)
       nio4r (~> 2.0)
     slack-ruby-bot (0.12.0)
       hashie
